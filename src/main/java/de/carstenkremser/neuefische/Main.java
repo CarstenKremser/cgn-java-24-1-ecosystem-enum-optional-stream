@@ -1,5 +1,7 @@
 package de.carstenkremser.neuefische;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
@@ -44,10 +46,6 @@ public class Main {
         for (DaysOfWeek day: DaysOfWeek.values()) {
             System.out.println("Persons with favorite day " + day + ": " + personRepository.getPersonsWithFavoriteWeekday(day));
         }
-
-
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
     }
 
     public static String getWeekdayName(DaysOfWeek day) {
