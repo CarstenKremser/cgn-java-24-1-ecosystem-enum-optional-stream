@@ -1,6 +1,8 @@
 package de.carstenkremser.neuefische;
 
-import java.util.ArrayList;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
 
@@ -35,10 +37,47 @@ public class StreamExercise {
         System.out.println("sum of numbers: " + sumOfNumbers);
         System.out.println();
 
+        try {
+            System.out.println("=== File students.csv:");
+            Files.lines(Path.of("students.csv")).forEach(System.out::println);
+            System.out.println("=== Header removed:");
+            Files.lines(Path.of("students.csv"))
+                    .skip(1)
+                    .forEach(System.out::println);
+
+            System.out.println("=== create Student:");
+            List<Student> students = Files.lines(Path.of("students.csv"))
+                    .skip(1)
+                    .map(line -> {
+                        if (line.trim().length() > 0) {
+                            String[] l = line.split("\\s*,\\s*");
+                            int id = Integer.valueOf(l[0]);
+                            int age = Integer.valueOf(l[3]);
+                            return new Student(id, l[1], l[2], age);
+                        } else {
+                            return null;
+                        }
+                    })
+                    .toList();
+
+            System.out.println(students);
+
+            System.out.println("=== removed invalid lines and duplicates:");
+            Files.lines(Path.of("students.csv"))
+                    .skip(1)
+                    .filter(l -> !l.isEmpty())
+                    .distinct()
+                    .forEach(System.out::println);
 
 
+
+        } catch (IOException e) {
+            System.out.println("IOException: " + e.getMessage());
+        }
 
 
     }
+
+
 
 }
