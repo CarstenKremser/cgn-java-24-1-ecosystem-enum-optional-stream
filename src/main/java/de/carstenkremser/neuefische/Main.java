@@ -8,14 +8,14 @@ public class Main {
     public static void main(String[] args) {
         PersonRepository personRepository = new PersonRepository();
 
-        personRepository.add(new Person(1,"Anna",DaysOfWeek.SUNDAY));
-        personRepository.add(new Person(2,"Bruno",DaysOfWeek.WEDNESDAY));
-        personRepository.add(new Person(3,"Carla",DaysOfWeek.MONDAY));
-        personRepository.add(new Person(4,"Daniel",DaysOfWeek.THURSDAY));
-        personRepository.add(new Person(5,"Franziska",DaysOfWeek.SATURDAY));
-        personRepository.add(new Person(6,"Georg",DaysOfWeek.WEDNESDAY));
-        personRepository.add(new Person(7,"Hannah",DaysOfWeek.SUNDAY));
-        personRepository.add(new Person(8,"Ingo",DaysOfWeek.FRIDAY));
+        personRepository.add(new Person(1,"Anna",DaysOfWeek.SUNDAY,Gender.FEMALE));
+        personRepository.add(new Person(2,"Bruno",DaysOfWeek.WEDNESDAY,Gender.MALE));
+        personRepository.add(new Person(3,"Carla",DaysOfWeek.MONDAY,Gender.FEMALE));
+        personRepository.add(new Person(4,"Daniel",DaysOfWeek.THURSDAY,Gender.MALE));
+        personRepository.add(new Person(5,"Franziska",DaysOfWeek.SATURDAY,Gender.FEMALE));
+        personRepository.add(new Person(6,"Georg",DaysOfWeek.WEDNESDAY,Gender.MALE));
+        personRepository.add(new Person(7,"Hannah",DaysOfWeek.SUNDAY,Gender.FEMALE));
+        personRepository.add(new Person(8,"Ingo",DaysOfWeek.FRIDAY,Gender.MALE));
 
         int randomId = (int)Math.round(Math.random()*12);
         Optional<Person> optionalPerson = personRepository.getById(randomId);
@@ -25,6 +25,24 @@ public class Main {
             System.out.println(person.name() + ": Favorite Day is " + getWeekdayName(person.favoriteDay()));
         } else {
             System.out.println("Person with id " + randomId + " does not exist");
+        }
+
+        for (Gender gender:Gender.values()) {
+            System.out.println("Gender: " + gender + " count: " + personRepository.countOfGender(gender));
+        }
+
+        String[] names = new String[] {"Anna", "Bertha", "Carla", "Dana"};
+        for (String name : names) {
+            Optional<Person> optionalPerson1 = personRepository.getByName(name);
+            if(optionalPerson1.isPresent()) {
+                System.out.println("Person with name " + name + ": " + optionalPerson1.get());
+            } else {
+                System.out.println("There is no person with name " + name);
+            }
+        }
+
+        for (DaysOfWeek day: DaysOfWeek.values()) {
+            System.out.println("Persons with favorite day " + day + ": " + personRepository.getPersonsWithFavoriteWeekday(day));
         }
 
 
